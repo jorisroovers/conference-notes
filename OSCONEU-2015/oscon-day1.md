@@ -257,6 +257,7 @@ sub fib($nth) {
 	default { fib($nth-1) + fib($nth-2) }
 }
 ```  
+
 - No return statement required in Perl. It could be there, but it's optional. In case it's not specified, the last evaluated value is returned (in this case: ```fib($nth-1) + fib($nth-2)```.
 - Function parameters: optional type hinting available, but also more advanced constraints like: string must be < 256 chars
 	- Type hints evaluated at compile time. Wrong type -> compiler errors
@@ -268,6 +269,30 @@ sub fib($nth) {
 	- Powerful function signatures
 	- Types you can actually yes
 	- Powerful, expressive classes
+
+	
+## Concurrency with Python 3.5 async & await
+
+**Luciano Ramalho (Python.pro.br)**
+
+[http://conferences.oreilly.com/oscon/open-source-eu-2015/public/schedule/detail/42860]()
+
+- Concurrency vs. parallelism
+	- Concurrency: doing multiples jobs at the same time while some are blocked, i.e. when job is waiting for network download
+	- Parallelism: doing things actual in parallel, on multiple cores or multiple systems
+-  Demo: fetching images (flags of all countries in the world) using asyncio, threads and using regular sequential io
+	- Demo uses [Vaurien, Chaos proxy](https://github.com/mozilla-services/vaurien) to introduce random latency
+- Generators and cooroutines
+- Threads
+	- Cannot be cancelled from the outside. This is the nature of threading. Instead you need to pass some variable to the thread that the thread regularly checks and see if needs to end. E.g. set ```my_thread.continue = False```, thread checks for ```continue``` flag during each iteration and exits when it is False.
+-  Cooroutines: used ```yield...from``` syntax in Python 3.4. Changed to ```await``` syntax in Python 3.5.
+	- asyncio: introduces futures (also called promises, deferreds, etc in different languages)
+		- When using aysnc, don't use ```sleep```, use ```asyncio.sleep```.
+	- Different from threads, asyncio futures **can** actually be cancelled, as contrary to threads, we know that asyncio futures can only be cancelled around ```yield``` statements.
+- Coroutines: lot less overhead than threads
+- Summary: the big advantage of using ```async``` is that you don't get callback hell -> use futures instead of passing a big list of callbacks.
+- Slides: [https://speakerdeck.com/ramalho/concurrency-with-python-3-dot-5-async-and-await]()
+
 
 
 
