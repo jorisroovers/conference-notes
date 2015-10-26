@@ -13,8 +13,7 @@
 - SOA
 	- REST vs. SOAP (REST is more evolutionary)
 - Evolvability as first-citizen
-- Conway's law (communication paths increase exponentially with # of team members)
-
+- [Conway's law](https://en.wikipedia.org/wiki/Conway%27s_law): (the interface structure of a software system will reflect the social structure of the organization(s) that produced it.
 ### The Seif Project
 **Douglas Crockford (PayPal)**
 
@@ -174,7 +173,29 @@
 - Q&A:
 	- How do you have your engineers do this: "Chaos/Failure driven development", similar to "Test driven development"
 	- If you use a different service for monitoring (e.g.: New Relic, PagerDuty), don't they rely on AWS as well?
-		- They often do to some extent, this is tricky...	   	   		
+		- They often do to some extent, this is tricky...
+
+## Building microservices with Go
+
+**Baron Schwartz (VividCortex)**
+
+[http://conferences.oreilly.com/oscon/open-source-eu-2015/public/schedule/detail/43895]()
+
+- Before Talk Q: How big to make a microservice?  A: Hard to answer. Don't take it too far. Microservice should consist of related functionality (e.g. metric, data collection, etc). 1 example: Create different read and write paths for your app (i.e. different microservice for read than for write) because those things have very different requirements.
+-  VividCortex: 250 repos, 30 engineers
+-  Separating reads from writes. LB using HaProxy, Nginx. Note that it might be a single binary, but just deployed twice: one handling reads, one handling writes.
+-  Problem: code duplication across micro-services. Initial solution: created an internal REST framework: NAP (a NAP is a small REST :-)).
+-  NAPv3: [Siesta](https://github.com/VividCortex/siesta)
+	- No batteries included
+	- Yes, there are a bunch of other Go web frameworks ([Gin](http://gin-gonic.github.io/gin/), [Martini](https://github.com/go-martini/martini)
+- Dependency management in Go: problematic, community still hasn't set on a solution. Baron's solution: custom perl script
+- Continuous Deployment: CircleCI, Hubot, 
+	- [Travis vs. CircleCI](https://strongloop.com/strongblog/node-js-travis-circle-codeship-compare/)
+- [12-factor apps](http://12factor.net/)
+	- Do not deamonize, use [runit](http://smarden.org/runit/)
+- dependency management: when updating a library, all services needs to be updated.
+- Use of Kafka
+- PM: [Process Manager across different microservices](https://github.com/VividCortex/pm)
 
 
 
