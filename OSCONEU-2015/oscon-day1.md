@@ -81,6 +81,9 @@
 
 
 ## Software Architecture as code
+**Simon Brown (Coding the Architecture)**
+
+[http://conferences.oreilly.com/oscon/open-source-eu-2015/public/schedule/detail/44248]()
 
 - Who likes visio to draw arch diagrams -> no one
 - Software architecture -> all about abstraction
@@ -115,6 +118,63 @@
 - example of DSL written in Java 
 -> structurizr: [https://www.structurizr.com/](), [https://github.com/simonbrowndotje/structurizr-java-example]()
 
+
+## Chaos patterns - architecting for failure in distributed systems ##
+
+**Jos Boumans (Krux Digital), Bruce Wong (Twilio)**
+
+[http://conferences.oreilly.com/oscon/open-source-eu-2015/public/schedule/detail/44442]()
+
+- Experience from companies: Krux, Netflix, Twilio
+- Example: AWS DynamoDB failure (sept 20th, 2015)
+	- Terms: [https://en.wikipedia.org/wiki/Thundering_herd_problem](thundering herd),  
+	- Cascading failure: a lot of other products depend on DynamoDB: monitoring, alerting, autoscaling -> everyhing failed
+	- "No paddle, sh*t creek"
+- This is just a single instance.
+- Problem: distributed systems are very complex and can't be simulated because they are so large. A certain set of problems only occurs on very large scale systems.
+- One solution is to be agile: different process -> deploy small changes all the time -> become more confident and minimize risk
+- Systems still can fail. You should consider resilience to be a feature => embrace failure. 
+- Case Study: Twitter
+	- Core experience: tweets + Optional enhancements
+	- If optional enhancements 
+- Build in fail-safes:
+	- Fallback patterns:  
+		- If the DB is down, can you use the cache copy?
+		- If the API is, can you're front-end cope with it? e.g.: use a CDN 
+		- Use CDN is down: use local device cache?
+		- API: Instead of failing when the app server can't reach the DB, return a 200/OK suggesting that another approach needs to be taken
+		- CAP Theorem: You can't have Availability, Consistency and Partition Tolerance at the same time
+			- Different systems are better at different things. General guideline (except for medical/financial systems): use eventual consistency
+	- Split out your control plane (avoid cascading failures):
+		- AWS: Use some of their services like DyamoDB, but use other services for control plane so that when AWS goes down, at least you're control plane doesn't go down.
+		- Avoid cross region dependencies
+	- Example: User experience: Twitter
+		- When you hit "post", what happens? Is it send directly to the server, does it happen async after the UI has been updated? What if the users refreshes the page right after clicking post? -> 	 
+
+- **Chaos Engineering**: how do we know that the product degrades does like it needs to without having it an actual outage
+	- How confident are you? Now? Tomororw? Next week? After a patch? vs. "If it ain't broke don't fix it"
+	- Chaos engineering is about building confidence
+		- Outages: uncontrolled, unpredictable, unintented -> large impact 
+		- Chaos: controlled, planned, intentional, microscopic user impact
+	- How do you discover Single Point of Failures (SPOF)?
+		- How do you validate that you've fixed a SPOF? -> you need to validate very often
+	- Chaos Monkey: SPOF detector
+		- Kills servers randomly, but only runs during business hours so team can respond when something goes wrong
+		- Maybe not do it during product launch either...
+		- "Failure Fridays": certain companies kill random servers on friday afternoon -> helps developers	to be proactive
+	- SLOW is hard. Make production + business + engineering decisions. When the short-cut slow operations? Twitter example: better to short-cut loding trends and not showing them, then to load everything slowely.
+		- Latency Monkey, other frameworks
+	- "Chaos is a dial, not a switch": you don't turn it on or off, you dial it to gradually introduce more chaos. Start small!
+	- Region failures:
+		- Chaos Kong: similutates region failures
+		- How to fix: GeoDNS (fallback to LatencyDNS), Proxy (cross region communication), Capacity (making sure you have enough capacity in other regions to cope with a region failover. If you're not careful you might create a cascading failure by overloading a healthy region during a failover).
+- Key takeaways:
+	- Failure will happen ("Once in a blue moon" happens few times a year) 
+	- Go found Chaos Engineering in your company!
+- Q&A:
+	- How do you have your engineers do this: "Chaos/Failure driven development", similar to "Test driven development"
+	- If you use a different service for monitoring (e.g.: New Relic, PagerDuty), don't they rely on AWS as well?
+		- They often do to some extent, this is tricky...	   	   		
 
 
 
