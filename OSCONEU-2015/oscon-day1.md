@@ -198,6 +198,43 @@
 - PM: [Process Manager across different microservices](https://github.com/VividCortex/pm)
 
 
+## GET /better
+
+**Mark Bates (Meta42 Labs, LLC)**
+
+[http://conferences.oreilly.com/oscon/open-source-eu-2015/public/schedule/detail/42653]()
+
+- Long inspirational story about how Mark grew up.
+- 5 Tips:
+	1. Practice: code every day
+		- How to? Always be coding
+			- Contribute
+			- Build
+			- How to get ideas: copy existing ideas
+				- Copy twitter, copy facebook, copy ...
+	2. Share
+		- github!
+		- Open source code at your own projects/work code
+		- Fix issues in library
+		- When contributing to other code: you're forced to adopt other people's style and libraries
+		- It helps build your name
+	3. Blog/Write
+		- Helps to improve your communication skills
+			- Hiring managers love this!
+			- Similarly: write documentation
+		-  Tough at first, but try make it a habbit
+	4. Perform
+		- Speak at conferences
+		- Travel, free beer :-)
+	5. Network
+		- Hugely important
+		- Introvert vs. Extravert. Even if it takes a lot of energy out of you, still do it, even if you need some "me"-time later. It's worth it!
+
+**Q&A**: How do you balance continously getting better with burning out? A: Take breaks if needed, but also make sure you love what you are doing. If you are burning out, then it is often a sign that you aren't doing what you love.
+
+
+
+
 
 
 
