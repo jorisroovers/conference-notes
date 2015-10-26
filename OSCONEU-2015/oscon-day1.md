@@ -235,8 +235,39 @@
 
 
 
+## Perl 6 for mere mortals
 
+**Curtis Poe (All Around The World)**
 
+[http://conferences.oreilly.com/oscon/open-source-eu-2015/public/schedule/detail/42812]()
+
+- Perl 6 is NOT the next version of Perl
+	- Perl 6 is separate from Perl 5 the same way C# and Java are different
+- Why Perl 6? Focus on "The Big 3"
+	- Useful Types
+- We won't be looking at perl in depth, more at the high level
+- Math: 7/2, -7/2, .1 + .2 + -3.
+	- Most languages give incorrect results, Perl 6 actually gives the correct result
+- Basic Function Signatures
+```
+sub fib($nth) {
+	given $nth {
+	when 0 { 0 }
+	when 1 { 1 }
+	default { fib($nth-1) + fib($nth-2) }
+}
+```  
+- No return statement required in Perl. It could be there, but it's optional. In case it's not specified, the last evaluated value is returned (in this case: ```fib($nth-1) + fib($nth-2)```.
+- Function parameters: optional type hinting available, but also more advanced constraints like: string must be < 256 chars
+	- Type hints evaluated at compile time. Wrong type -> compiler errors
+	- Constraints: evaluated at run time 
+- Concurrency: switching between jobs <-> Parallelism: throughly running in parallel
+- Presenter had to skip very fast through types, classes because of time.
+- Summary
+	- Math that works
+	- Powerful function signatures
+	- Types you can actually yes
+	- Powerful, expressive classes
 
 
 
