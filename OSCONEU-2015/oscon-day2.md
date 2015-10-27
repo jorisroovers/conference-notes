@@ -149,9 +149,66 @@
 ### OSCON EU: Next year: Oct 17th - Oct 19th: London 
 
 
-   
+## NoSQL's biggest lie: SQL never went away
 
+**Matthew Revell (Couchbase)**
 
+[http://conferences.oreilly.com/oscon/open-source-eu-2015/public/schedule/detail/44242]()
 
-
+- NoSQL isn't the best word. Non-relational would probably be better
+- 1960: first commercial DB
+	- Sabre system: collaboration between American Airlines and IBM
+- Very often: the datamodel has defined the query
+- History of Datamodels:
+	- hierarchical DBs: Windows Registry, HTML DOM, others
+	- Network: more like a linked list
+	- Both of these are very procedural in how you retrieve the data, you write programs that navigate through the date and then retrieve it
+		- Later on with SQL you get relational data that you can query. 
+	- 
+- 2005: NoSQL
+	- Nothing new, just the same ideas in a new shell
+	- Key: Value
+	- Document database: getting some insight on the values in the key-value store.
+		- E.g. index the json returned by a key
+			- ``` myKey: { mysubkey: "myval"} ```
+			- Index on mysubkey
+	- Column Database: HBAase, Cassandra
+	- Graph DB: Neo4J 
+- There is always a trade-off
+	- Scalability vs. Speed vs. Availablabilty vs. Query flexibility vs. ...
+	- However, going offline isn't an option anymore
+		- So you want to make trade-offs, but you can't really for some things
+	- So you want the have the SQL query power, but you also want the flexbility of NoSQL
+	- Problem is that this has been ignored for a long time by NoSQL
+		- E.g. the [Amazon DynamoDB paper](http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf): very interesting, but completely ignores querying
+- Querying non-relational DBs
+	- half solutions with secondary indices etc exists, but not really useful
+	- Developers want the declarative queries that are completely hadnled by the DB, and not in programming language
+		- This way they can forget about the querying and have the DB handle it
+	- Mongo DB: using json to do queries
+	- JSONiq ~= XQuery for JSON
+		- Declarative language for json
+		- Set based, not tuple based (like SQL)
+		- Very similar to SQL in it's nature, but different language with slightly different semantics. Developers don't like having to learn a different language.
+		- We might as well do it using something that looks more like SQL
+	- What we are seeing now: using SQL-like syntax to query non-relational DB
+		- Best example: Cassandra's CQL
+			- Understanding how the data is stored on disk is really important though. For example with composite keys, you need to know that only the first part is really the key, the other parts are used for sorting. This is something you need to take into account when querying!
+			- So, CQL: Not an ad-hoc query language!
+	- A SQL for Json
+		- JSON: semi-structured, data is nsted, sometimes missing fields
+		- SQL++
+			- Based on a [Academic Paper](http://arxiv.org/abs/1405.3631)
+			- A suppoer set of SQL for semi-structureed data
+			- Can query inside nested data
+			- Joins between documents 	
+	- N1QL: SQL++ in practice
+		- Non-first form query language
+		- Part of Couchbase Server 4.0
+			- High available cache, key-value store, N1QL
+- N1QL Deepdive
+	- MISSING keyword to deal with missing data in the json objects (similar to NULL fields in relational DBs)
+	- UNNEST/NEST keyword: not entirely clear how it works...
+		- A way of flattening nested json data 
+- N1QL not in production in very many companies yet. First stable version of couchdb just released last month.
 
